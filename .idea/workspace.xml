@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8a47e86-c949-49c9-9e84-18038467c5d2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/CP2406_A1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/vmanghnani/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/vmanghnani/Coordinates.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/vmanghnani/Road.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/vmanghnani/TrafficLight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/sample.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/Sample User Stories.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/vmanghnani/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/vmanghnani/Main.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +21,13 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -23,25 +35,41 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1VVKagwrLAKFkia3VC9hoNo47YN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="ignore.virus.scanning.warn.message" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Vishal\Documents\Github\JCU\CP2406-A1\src" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main (1)">
+    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+      <module name="CP2406-A1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sample.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.vmanghnani.Main" />
       <module name="CP2406-A1" />
@@ -52,6 +80,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Shape_Example" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.vmanghnani.Shape_Example" />
+      <module name="CP2406-A1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vmanghnani.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main (1)" />
+        <item itemvalue="Application.Shape_Example" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -75,10 +135,54 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1085" y="416" key="#com.intellij.ide.util.MemberChooser" timestamp="1577779767368">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1085" y="416" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/2560.373.1920.1040@0.0.2560.1400" timestamp="1577779767368" />
+    <state x="2906" y="635" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1577780986024">
+      <screen x="2560" y="373" width="1920" height="1040" />
+    </state>
+    <state x="2906" y="635" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1577780986024" />
+    <state x="1301" y="572" key="FileChooserDialogImpl" timestamp="1577781014659">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1301" y="572" key="FileChooserDialogImpl/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1577781014659" />
+    <state width="1867" height="270" key="GridCell.Tab.0.bottom" timestamp="1577781451370">
+      <screen x="2560" y="373" width="1920" height="1040" />
+    </state>
+    <state width="1867" height="270" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1577781451370" />
+    <state width="1867" height="270" key="GridCell.Tab.0.center" timestamp="1577781451370">
+      <screen x="2560" y="373" width="1920" height="1040" />
+    </state>
+    <state width="1867" height="270" key="GridCell.Tab.0.center/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1577781451370" />
+    <state width="1867" height="270" key="GridCell.Tab.0.left" timestamp="1577781451370">
+      <screen x="2560" y="373" width="1920" height="1040" />
+    </state>
+    <state width="1867" height="270" key="GridCell.Tab.0.left/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1577781451370" />
+    <state width="1867" height="270" key="GridCell.Tab.0.right" timestamp="1577781451370">
+      <screen x="2560" y="373" width="1920" height="1040" />
+    </state>
+    <state width="1867" height="270" key="GridCell.Tab.0.right/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1577781451370" />
+    <state x="801" y="235" key="SettingsEditor" timestamp="1577781409375">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="801" y="235" key="SettingsEditor/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1577781409375" />
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1577779428578">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/2560.373.1920.1040@0.0.2560.1400" timestamp="1577779428578" />
+    <state x="2790" y="425" key="new project wizard" timestamp="1577780734500">
+      <screen x="2560" y="373" width="1920" height="1040" />
+    </state>
+    <state x="2790" y="425" key="new project wizard/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1577780734500" />
   </component>
 </project>
