@@ -1,9 +1,7 @@
 package vmanghnani;
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
-import static javafx.application.Application.launch;
+import java.io.IOException;
+import java.util.ArrayList;
 
 class Grid {
     private String[][] mygrid;
@@ -91,11 +89,9 @@ class Grid {
 
     public void updateCarPos(ArrayList<Car> mycars) {
         for(Car currentcar: mycars) {
-            if (currentcar.getCar_speed() == 1) {
+            if (currentcar.getCar_speed() == 1 || currentcar.getCar_speed() == 0) {
                 Coordinates current_pos = currentcar.getCar_pos();
-                //System.out.printf("%d. %d", current_pos.getX_coordinate(), current_pos.getY_coordinate());
                 Coordinates next_pos = Coordinates.add_coordinate(current_pos, currentcar.getCar_pos().direction_to_coords(currentcar.getDirection()));
-                //System.out.printf("%d. %d", next_pos.getX_coordinate(), next_pos.getY_coordinate());
                 if (this.mygrid[next_pos.getX_coordinate()][next_pos.getY_coordinate()] == "|---|") {
                     currentcar.setCar_pos(next_pos);
                 }
