@@ -57,13 +57,13 @@ class Grid {
             for (int i = currentroad.getStart_pos().getX_coordinate(); i <= currentroad.getEnd_pos().getX_coordinate(); i++) {
                 for (int j = currentroad.getStart_pos().getY_coordinate(); j <= currentroad.getEnd_pos().getY_coordinate(); j++) {
                     if (currentroad.getDirection() == 'N') {
-                        this.mygrid[i][j] = String.format("|%d^%d|", currentroad.getRoad_no(), currentroad.getRoad_no());
+                        this.mygrid[i][j] = String.format("|---|", currentroad.getRoad_no(), currentroad.getRoad_no());
                     } else if (currentroad.getDirection() == 'S') {
-                        this.mygrid[i][j] = String.format("|%d_%d|", currentroad.getRoad_no(), currentroad.getRoad_no());
+                        this.mygrid[i][j] = String.format("|---|", currentroad.getRoad_no(), currentroad.getRoad_no());
                     } else if (currentroad.getDirection() == 'E') {
-                        this.mygrid[i][j] = String.format("|<-%d|", currentroad.getRoad_no(), currentroad.getRoad_no());
+                        this.mygrid[i][j] = String.format("|---|", currentroad.getRoad_no(), currentroad.getRoad_no());
                     } else if (currentroad.getDirection() == 'W') {
-                        this.mygrid[i][j] = String.format("|%d->|", currentroad.getRoad_no(), currentroad.getRoad_no());
+                        this.mygrid[i][j] = String.format("|---|", currentroad.getRoad_no(), currentroad.getRoad_no());
                     }
                 }
             }
@@ -106,8 +106,8 @@ public class Main {
         the_grid.myroads.add(new Road(1, new Coordinates(1,10), new Coordinates(15, 10),'E'));
         the_grid.myroads.add(new Road(2, new Coordinates(2,1), new Coordinates(2, 25),'S'));
         the_grid.myroads.add(new Road(3, new Coordinates(16,10), new Coordinates(28, 10),'E'));
-        the_grid.mycars.add(new Car(new Coordinates(1,10)));
-        the_grid.mycars.add(new Car(new Coordinates(2,1)));
+        the_grid.mycars.add(new Car(the_grid.myroads.get(0).getStart_pos()));
+        the_grid.mycars.add(new Car(the_grid.myroads.get(1).getStart_pos()));
         the_grid.mycars.get(0).setDirection('S');
         the_grid.mycars.get(1).setDirection('E');
         the_grid.drawGrid();
