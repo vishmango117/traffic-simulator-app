@@ -29,59 +29,62 @@ class Grid {
         return width;
     }
 
-    public void drawRoad(Coordinates start_pos, Coordinates end_pos) {
-        //System.out.println(start_pos.getX_coordinate()+","+start_pos.getY_coordinate());
-        for(int i=start_pos.getX_coordinate();i<=end_pos.getX_coordinate();i++) {
-            for(int j=start_pos.getY_coordinate();j<=end_pos.getY_coordinate();j++) {
-                this.mygrid[i][j]="|---|";
-            }
-        }
-    }
 
     public void drawGrid() {
         //Initialise Plain Grid
-        for (int i = 0; i < this.getHeight(); i++) {
-            for (int j = 0; j < this.getWidth(); j++) {
-                this.mygrid[i][j] = "|   |";
+        for (int i = 0; i <this.getHeight(); i++) {
+            for (int j = 0; j <this.getWidth(); j++) {
+                this.mygrid[i][j] = "  ";
             }
-        }
-        //Drawing Borders
-        for (int i = 0; i < width; i++) {
-            this.mygrid[i][0] = "|";
-            this.mygrid[i][width - 1] = "|";
-            this.mygrid[0][i] = "_____";
-            this.mygrid[height - 1][i] = "_____";
         }
         //Constructing Roads
         for (Road currentroad : myroads) {
-            for (int i = currentroad.getStart_pos().getX_coordinate(); i <= currentroad.getEnd_pos().getX_coordinate(); i++) {
-                for (int j = currentroad.getStart_pos().getY_coordinate(); j <= currentroad.getEnd_pos().getY_coordinate(); j++) {
-                    if (currentroad.getDirection() == 'N') {
-                        this.mygrid[i][j] = String.format("|---|", currentroad.getRoad_no(), currentroad.getRoad_no());
-                    } else if (currentroad.getDirection() == 'S') {
-                        this.mygrid[i][j] = String.format("|---|", currentroad.getRoad_no(), currentroad.getRoad_no());
-                    } else if (currentroad.getDirection() == 'E') {
-                        this.mygrid[i][j] = String.format("|---|", currentroad.getRoad_no(), currentroad.getRoad_no());
-                    } else if (currentroad.getDirection() == 'W') {
-                        this.mygrid[i][j] = String.format("|---|", currentroad.getRoad_no(), currentroad.getRoad_no());
-                    }
+            for (int i =currentroad.getStart_pos().getY_Pos(); i<=currentroad.getEnd_pos().getY_Pos(); i++) {
+                System.out.println("i: "+i);
+                for (int j =currentroad.getStart_pos().getX_Pos(); j<=currentroad.getEnd_pos().getX_Pos(); j++) {
+                    System.out.println("j: "+j);
+                    this.mygrid[i][j] = "R1";
                 }
             }
         }
         //Adding Cars
         for (Car currentcar : mycars) {
-            //System.out.printf("%d %d",currentcar.getCar_pos().getX_coordinate(),currentcar.getCar_pos().getY_coordinate());
-            this.mygrid[currentcar.getCar_pos().getX_coordinate()][currentcar.getCar_pos().getY_coordinate()] = "|Car|";
+            this.mygrid[currentcar.getCar_pos().getY_Pos()][currentcar.getCar_pos().getX_Pos()]="C1";
 
         }
         //Adding Intersections
+        /*for (Intersection currentintersection: mystraight_intersections) {
+            this.mygrid[currentintersection.getPosition().getY_Pos()][currentintersection.getPosition().getX_Pos()]="I1";
+        }*/
+    }
+
+    public void printGrid() {
+        for (int i = 0; i < this.getHeight(); i++) {
+            for (int j = 0; j < this.getWidth(); j++) {
+                System.out.printf("|%s|", this.mygrid[i][j]);
+            }
+            System.out.println();
+        }
     }
 
 
     public void displayGrid() {
         for(int i=0;i<this.getHeight();i++) {
             for(int j=0;j<this.getWidth();j++) {
-                System.out.printf("%s",this.mygrid[i][j]);
+                if(this.mygrid[i][j].equals("TB") || this.mygrid[i][j].equals("BB"))
+                    System.out.printf("-----");
+                else if(this.mygrid[i][j].equals("SB")){
+                    System.out.printf("|");
+                }
+                else if(this.mygrid[i][j].startsWith("R")) {
+                    System.out.printf("|---|");
+                }
+                else if(this.mygrid[i][j].startsWith("C")) {
+                    System.out.printf("|-C-|");
+                }
+                else {
+                    System.out.printf("|   |");
+                }
             }
             System.out.println();
         }
@@ -89,38 +92,40 @@ class Grid {
 
     public void updateCarPos(ArrayList<Car> mycars) {
         for(Car currentcar: mycars) {
-            if (currentcar.getCar_speed() == 1 || currentcar.getCar_speed() == 0) {
-                Coordinates current_pos = currentcar.getCar_pos();
-                Coordinates next_pos = Coordinates.add_coordinate(current_pos, currentcar.getCar_pos().direction_to_coords(currentcar.getDirection()));
-                if (this.mygrid[next_pos.getX_coordinate()][next_pos.getY_coordinate()] == "|---|") {
-                    currentcar.setCar_pos(next_pos);
-                }
+            Coordinates current_pos = currentcar.getCar_pos();
+            Coordinates next_pos = Coordinates.add_coordinate(current_pos, current_pos.direction_to_coords(currentcar.getDirection()));
+            if(this.mygrid[next_pos.getY_Pos()][next_pos.getX_Pos()] == "R1") {
+                currentcar.setCar_pos(next_pos);
+            }
             }
         }
-    }
 }
 
 public class Main {
     public static void main(String[] args) throws IOException {
         Grid the_grid = new Grid(30,30);
-        the_grid.myroads.add(new Road(1, new Coordinates(1,10), new Coordinates(15, 10),'E'));
-        the_grid.myroads.add(new Road(2, new Coordinates(2,1), new Coordinates(2, 25),'S'));
-        the_grid.myroads.add(new Road(3, new Coordinates(16,10), new Coordinates(28, 10),'E'));
-        the_grid.mycars.add(new Car(the_grid.myroads.get(0).getStart_pos()));
-        the_grid.mycars.add(new Car(the_grid.myroads.get(1).getStart_pos()));
-        the_grid.mycars.get(0).setDirection('S');
-        the_grid.mycars.get(1).setDirection('E');
-        the_grid.drawGrid();
-        the_grid.displayGrid();
+
+        the_grid.myroads.add(new Road(1, new Coordinates(10,2), new Coordinates(17, 2),'E'));
+        the_grid.myroads.add(new Road(2, new Coordinates(18,2), new Coordinates(28, 2),'E'));
+        the_grid.myroads.add(new Road(2, new Coordinates(15,10), new Coordinates(15, 25),'S'));
+        //the_grid.myroads.add(new Road(3, new Coordinates(16,10), new Coordinates(28, 10),'E'));
+
+        the_grid.mycars.add(new Car(1, the_grid.myroads.get(0).getStart_pos(), 'E'));
+        the_grid.mycars.add(new Car(2, the_grid.myroads.get(2).getStart_pos(), the_grid.myroads.get(1).getDirection()));
         the_grid.mycars.get(0).Move();
         the_grid.mycars.get(1).Move();
-        for(int i=0;i<3;i++) {
-            the_grid.updateCarPos(the_grid.mycars);
-            the_grid.drawGrid();
-            the_grid.displayGrid();
+        try {
+            for(int i=0;i<16;i++) {
+                the_grid.updateCarPos(the_grid.mycars);
+                the_grid.drawGrid();
+                the_grid.printGrid();
+            }
+        }
+        catch(NullPointerException e) {
+            System.out.println("LUL");
         }
         the_grid.mycars.get(0).Stop();
-        the_grid.mycars.get(1).Stop();
+//        the_grid.mycars.get(1).Stop();
     }
 
 }

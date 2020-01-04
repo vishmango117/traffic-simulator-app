@@ -1,14 +1,16 @@
 package vmanghnani;
 
 public class Car {
+    private int car_no;
     private Coordinates car_pos;
     private int car_speed;
-    private char Direction;
+    private char direction;
 
-    public Car(Coordinates car_pos) {
+    public Car(int car_no, Coordinates car_pos, char direction) {
+        this.car_no = car_no;
         this.car_pos = car_pos;
         this.car_speed = 0;
-        this.Direction = 'S';
+        this.direction = direction;
     }
 
     public void Move() {
@@ -35,10 +37,18 @@ public class Car {
     }
 
     public char getDirection() {
-        return Direction;
+        return direction;
     }
 
     public void setDirection(char direction) {
-        Direction = direction;
+        this.direction = direction;
+    }
+
+    public int getCar_no() {
+        return car_no;
+    }
+
+    public void setCar_no(int car_no) {
+        this.car_no = car_no;
     }
 }
