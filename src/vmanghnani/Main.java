@@ -40,9 +40,7 @@ class Grid {
         //Constructing Roads
         for (Road currentroad : myroads) {
             for (int i =currentroad.getStart_pos().getY_Pos(); i<=currentroad.getEnd_pos().getY_Pos(); i++) {
-                System.out.println("i: "+i);
                 for (int j =currentroad.getStart_pos().getX_Pos(); j<=currentroad.getEnd_pos().getX_Pos(); j++) {
-                    System.out.println("j: "+j);
                     this.mygrid[i][j] = "R1";
                 }
             }
@@ -53,9 +51,9 @@ class Grid {
 
         }
         //Adding Intersections
-        for (Intersection currentintersection: mystraight_intersections) {
+        /*for (Intersection currentintersection: mystraight_intersections) {
             this.mygrid[currentintersection.getPosition().getY_Pos()][currentintersection.getPosition().getX_Pos()]="I1";
-        }
+        }*/
     }
 
     public void printGrid() {
@@ -110,8 +108,8 @@ public class Main {
         the_grid.myroads.add(new Road(2, new Coordinates(15,10), new Coordinates(15, 25),'S'));
         //the_grid.myroads.add(new Road(3, new Coordinates(16,10), new Coordinates(28, 10),'E'));
 
-        the_grid.mycars.add(new Car(1, the_grid.myroads.get(0).getStart_pos(), 'E'));
-        the_grid.mycars.add(new Car(2, the_grid.myroads.get(2).getStart_pos(), the_grid.myroads.get(1).getDirection()));
+        the_grid.mycars.add(new Car(1, the_grid.myroads.get(0).getStart_pos(), the_grid.myroads.get(0).getDirection()));
+        the_grid.mycars.add(new Car(2, the_grid.myroads.get(2).getStart_pos(), the_grid.myroads.get(2).getDirection()));
         the_grid.mycars.get(0).Move();
         the_grid.mycars.get(1).Move();
         try {
@@ -119,6 +117,7 @@ public class Main {
                 the_grid.updateCarPos(the_grid.mycars);
                 the_grid.drawGrid();
                 the_grid.printGrid();
+                System.out.println();
             }
         }
         catch(NullPointerException e) {

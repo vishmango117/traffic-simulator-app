@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/vmanghnani/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vmanghnani/Main.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,6 +74,11 @@
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -83,6 +87,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="OverrideImplement.combined" value="false" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
@@ -95,19 +100,13 @@
       <recent name="C:\Users\Vishal\IdeaProjects\CP2406-A1\src" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager" selected="Application.Main (1)">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -119,12 +118,6 @@
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
-    </configuration>
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="vmanghnani.Main" />
@@ -203,6 +196,18 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -242,5 +247,27 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="2505" height="268" key="GridCell.Tab.0.bottom" timestamp="1578200539636">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2505" height="268" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.373.1920.1040@0.0.2560.1400" timestamp="1578200539636" />
+    <state width="1865" height="268" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1578197979461" />
+    <state width="2505" height="268" key="GridCell.Tab.0.center" timestamp="1578200539635">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2505" height="268" key="GridCell.Tab.0.center/0.0.2560.1400/2560.373.1920.1040@0.0.2560.1400" timestamp="1578200539635" />
+    <state width="1865" height="268" key="GridCell.Tab.0.center/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1578197979460" />
+    <state width="2505" height="268" key="GridCell.Tab.0.left" timestamp="1578200539635">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2505" height="268" key="GridCell.Tab.0.left/0.0.2560.1400/2560.373.1920.1040@0.0.2560.1400" timestamp="1578200539635" />
+    <state width="1865" height="268" key="GridCell.Tab.0.left/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1578197979460" />
+    <state width="2505" height="268" key="GridCell.Tab.0.right" timestamp="1578200539635">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2505" height="268" key="GridCell.Tab.0.right/0.0.2560.1400/2560.373.1920.1040@0.0.2560.1400" timestamp="1578200539635" />
+    <state width="1865" height="268" key="GridCell.Tab.0.right/0.0.2560.1400/2560.373.1920.1040@2560.373.1920.1040" timestamp="1578197979460" />
   </component>
 </project>
