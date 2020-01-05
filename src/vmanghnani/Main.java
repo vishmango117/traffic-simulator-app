@@ -53,9 +53,9 @@ class Grid {
 
         }
         //Adding Intersections
-        /*for (Intersection currentintersection: mystraight_intersections) {
+        for (Intersection currentintersection: mystraight_intersections) {
             this.mygrid[currentintersection.getPosition().getY_Pos()][currentintersection.getPosition().getX_Pos()]="I1";
-        }*/
+        }
     }
 
     public void printGrid() {
