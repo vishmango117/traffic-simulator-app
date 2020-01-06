@@ -1,18 +1,14 @@
 package vmanghnani;
 
 public class Straight extends Intersection {
-    private Road straight_size_pos;
+    private Coordinates next_position;
 
-    public Straight(Coordinates position, Road straight_size_pos) {
-        super(position);
-        this.straight_size_pos = straight_size_pos;
+    public Straight(Coordinates current_position, Coordinates next_position) {
+        super(current_position);
+        this.next_position = next_position;
     }
 
-    public Road getStraight_size_pos() {
-        return straight_size_pos;
-    }
-
-    public void setStraight_size_pos(Road straight_size_pos) {
-        this.straight_size_pos = straight_size_pos;
+    public Coordinates getNext_position() {
+        return next_position;
     }
 }

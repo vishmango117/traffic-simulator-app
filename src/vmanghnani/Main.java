@@ -51,9 +51,9 @@ class Grid {
 
         }
         //Adding Intersections
-        /*for (Intersection currentintersection: mystraight_intersections) {
-            this.mygrid[currentintersection.getPosition().getY_Pos()][currentintersection.getPosition().getX_Pos()]="I1";
-        }*/
+        for (Intersection currentintersection: mystraight_intersections) {
+            this.mygrid[currentintersection.getCurrent_position().getY_Pos()][currentintersection.getCurrent_position().getX_Pos()]="I1";
+        }
     }
 
     public void printGrid() {
@@ -104,9 +104,10 @@ public class Main {
         Grid the_grid = new Grid(30,30);
 
         the_grid.myroads.add(new Road(1, new Coordinates(10,2), new Coordinates(17, 2),'E'));
-        the_grid.myroads.add(new Road(2, new Coordinates(18,2), new Coordinates(28, 2),'E'));
+        the_grid.myroads.add(new Road(2, new Coordinates(19,2), new Coordinates(28, 2),'E'));
         the_grid.myroads.add(new Road(2, new Coordinates(15,10), new Coordinates(15, 25),'S'));
         //the_grid.myroads.add(new Road(3, new Coordinates(16,10), new Coordinates(28, 10),'E'));
+        the_grid.mystraight_intersections.add(new Straight(new Coordinates(18,2), new Coordinates(19,2)));
 
         the_grid.mycars.add(new Car(1, the_grid.myroads.get(0).getStart_pos(), the_grid.myroads.get(0).getDirection()));
         the_grid.mycars.add(new Car(2, the_grid.myroads.get(2).getStart_pos(), the_grid.myroads.get(2).getDirection()));
