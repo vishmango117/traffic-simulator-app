@@ -9,9 +9,8 @@ class Grid {
     private int width;
     public ArrayList<Road> myroads;
     public ArrayList<Car> mycars;
-    public ArrayList<Straight> mystraight_intersections;
-    public ArrayList<ThreeWay> mythreeway_intersections;
-    public ArrayList<FourWay> myfourway_intersections;
+    public ArrayList<TrafficLight> mytrafficlights;
+    public ArrayList<Straight> straight_intersections;
 
     public Grid(int height, int width) {
         this.mygrid = new String[height][width];
@@ -51,11 +50,12 @@ class Grid {
 
         }
         //Adding Intersections
-        for (Intersection currentintersection: mystraight_intersections) {
-            this.mygrid[currentintersection.getCurrent_position().getY_Pos()][currentintersection.getCurrent_position().getX_Pos()]="I1";
+        for(Straight current_intersections : straight_intersections) {
+            this.mygrid[current_intersections.getCurrent_position().getY_Pos()][current_intersections.getCurrent_position().getX_Pos()]="I1";
+            this.mygrid[current_intersections.getCurrent_position().getY_Pos()-1][current_intersections.getCurrent_position().getX_Pos()-1]="T1";
         }
     }
-
+    //For Debugging Testing and Development Purposes Only
     public void printGrid() {
         for (int i = 0; i < this.getHeight(); i++) {
             for (int j = 0; j < this.getWidth(); j++) {
@@ -69,9 +69,9 @@ class Grid {
     public void displayGrid() {
         for(int i=0;i<this.getHeight();i++) {
             for(int j=0;j<this.getWidth();j++) {
-                if(this.mygrid[i][j].equals("TB") || this.mygrid[i][j].equals("BB"))
-                    System.out.printf("-----");
-                else if(this.mygrid[i][j].equals("SB")){
+                //if(this.mygrid[i][j].equals("TB") || this.mygrid[i][j].equals("BB"))
+                //   System.out.printf("-----");
+                if(this.mygrid[i][j].equals("SB")){
                     System.out.printf("|");
                 }
                 else if(this.mygrid[i][j].startsWith("R")) {
@@ -79,6 +79,12 @@ class Grid {
                 }
                 else if(this.mygrid[i][j].startsWith("C")) {
                     System.out.printf("|-C-|");
+                }
+                else if(this.mygrid[i][j].startsWith("I")) {
+                    System.out.printf("|-X-|");
+                }
+                else if(this.mygrid[i][j].startsWith("T")) {
+                    System.out.println("|-:-|");
                 }
                 else {
                     System.out.printf("|   |");
@@ -88,6 +94,27 @@ class Grid {
         }
     }
 
+    public void getIntersection() {
+
+    }
+
+    public void updateTrafficLight() {
+        for(TrafficLight currentTrafficLight: mytrafficlights) {
+            currentTrafficLight.operate();
+        }
+    }
+
+    public boolean checkTrafficLight(Coordinates next_pos) {
+        for(TrafficLight current_tl: mytrafficlights) {
+            if(current_tl.getPosition().equals(next_pos)) {
+                if(current_tl.getColor()=="G") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void updateCarPos(ArrayList<Car> mycars) {
         for(Car currentcar: mycars) {
             Coordinates current_pos = currentcar.getCar_pos();
@@ -95,19 +122,36 @@ class Grid {
             if(this.mygrid[next_pos.getY_Pos()][next_pos.getX_Pos()] == "R1") {
                 currentcar.setCar_pos(next_pos);
             }
+            else if(this.mygrid[next_pos.getY_Pos()][next_pos.getX_Pos()] == "I1") {
+                if(checkTrafficLight(next_pos)) {
+
+                }
+                else {
+                    currentcar.setCar_pos(current_pos);
+                }
+                // check traffic light
+
+                // check if car is not inside the intersection
             }
         }
+    }
 }
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
         Grid the_grid = new Grid(30,30);
+        the_grid.myroads = new ArrayList<>();
+        the_grid.mycars = new ArrayList<>();
+        the_grid.straight_intersections = new ArrayList<>();
 
         the_grid.myroads.add(new Road(1, new Coordinates(10,2), new Coordinates(17, 2),'E'));
         the_grid.myroads.add(new Road(2, new Coordinates(19,2), new Coordinates(28, 2),'E'));
         the_grid.myroads.add(new Road(2, new Coordinates(15,10), new Coordinates(15, 25),'S'));
         //the_grid.myroads.add(new Road(3, new Coordinates(16,10), new Coordinates(28, 10),'E'));
-        the_grid.mystraight_intersections.add(new Straight(new Coordinates(18,2), new Coordinates(19,2)));
+        Straight lol = new Straight(new Coordinates(18,2), new Coordinates(19,2));
+
+        the_grid.straight_intersections.add(lol);
 
         the_grid.mycars.add(new Car(1, the_grid.myroads.get(0).getStart_pos(), the_grid.myroads.get(0).getDirection()));
         the_grid.mycars.add(new Car(2, the_grid.myroads.get(2).getStart_pos(), the_grid.myroads.get(2).getDirection()));

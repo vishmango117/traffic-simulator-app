@@ -7,6 +7,9 @@ public class Intersection {
         this.current_position = current_position;
     }
 
+    public Intersection() {
+    }
+
     public Coordinates getCurrent_position() {
         return current_position;
     }
