@@ -1,28 +1,19 @@
 package vmanghnani;
 
+import java.util.ArrayList;
+
 public class ThreeWay extends Intersection {
-    private Road left_pos;
-    private Road right_pos;
+    private ArrayList<Road> next_positions;
 
-    public ThreeWay(Coordinates position, Road left_pos, Road right_pos) {
-        super(position);
-        this.left_pos = left_pos;
-        this.right_pos = right_pos;
+    public ThreeWay(Road int_road, ArrayList<Road> next_positions) {
+        super(int_road);
+        this.next_positions = next_positions;
     }
 
-    public Road getLeft_pos() {
-        return left_pos;
+    public ThreeWay(ArrayList<Road> next_positions) {
+        this.next_positions = next_positions;
     }
 
-    public void setLeft_pos(Road left_pos) {
-        this.left_pos = left_pos;
-    }
-
-    public Road getRight_pos() {
-        return right_pos;
-    }
-
-    public void setRight_pos(Road right_pos) {
-        this.right_pos = right_pos;
+    public ThreeWay() {
     }
 }

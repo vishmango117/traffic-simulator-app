@@ -1,20 +1,20 @@
 package vmanghnani;
 
 public class Intersection {
-    private Coordinates current_position;
+    private Road int_road;
 
-    public Intersection(Coordinates current_position) {
-        this.current_position = current_position;
+    public Intersection(Road int_road) {
+        this.int_road = int_road;
     }
 
     public Intersection() {
     }
 
-    public Coordinates getCurrent_position() {
-        return current_position;
+    public Road getInt_road() {
+        return int_road;
     }
 
-    public void setCurrent_position(Coordinates current_position) {
-        this.current_position = current_position;
+    public void setInt_road(Road int_road) {
+        this.int_road = int_road;
     }
 }
