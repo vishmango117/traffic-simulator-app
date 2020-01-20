@@ -13,4 +13,8 @@ public class FourWay extends Intersection {
     public FourWay(ArrayList<Road> next_position) {
         this.next_position = next_position;
     }
+
+    public ArrayList<Road> getNext_position() {
+        return next_position;
+    }
 }
