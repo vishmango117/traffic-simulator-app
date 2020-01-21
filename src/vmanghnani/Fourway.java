@@ -2,15 +2,18 @@ package vmanghnani;
 
 import java.util.ArrayList;
 
-public class ThreeWay extends Intersection {
+public class Fourway extends Intersection {
     private ArrayList<Road> next_position;
 
-    public ThreeWay(Road int_road, ArrayList<Road> next_position) {
-        super(int_road);
+    public Fourway(Road current_position, ArrayList<Road> next_position) {
+        super(current_position);
         this.next_position = next_position;
     }
 
-    public ThreeWay(ArrayList<Road> next_positions) {
+    public Fourway() {
+    }
+
+    public Fourway(ArrayList<Road> next_position) {
         this.next_position = next_position;
     }
 
