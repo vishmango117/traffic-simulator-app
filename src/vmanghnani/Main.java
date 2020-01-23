@@ -1,12 +1,14 @@
 package vmanghnani;
 
+
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 class Grid {
-    private String[][] mygrid_roads;
-    private String[][] mygrid_vehicles;
+    public String[][] mygrid_roads;
+    public String[][] mygrid_vehicles;
     private int height;
     private int width;
     public ArrayList<Road> myroads;
@@ -69,9 +71,9 @@ class Grid {
             this.mygrid_vehicles[currentcar.getCar_pos().getY_Pos()][currentcar.getCar_pos().getX_Pos()] = "CR1";
 
         }
-//        for(TrafficLight current_tl: mytrafficlights) {
-//            this.mygrid[current_tl.getPosition().getY_Pos()][current_tl.getPosition().getX_Pos()]="T1";
-//        }
+        for(TrafficLight current_tl: mytrafficlights) {
+            this.mygrid_roads[current_tl.getPosition().getY_Pos()][current_tl.getPosition().getX_Pos()]="TL1";
+        }
 
     }
 
@@ -131,13 +133,30 @@ class Grid {
         }
     }
 
-    public boolean checkTrafficLight(Coordinates next_pos) {
-        for (TrafficLight current_tl : mytrafficlights) {
-            if (current_tl.getPosition().equals(next_pos)) {
-                if (current_tl.getColor() == "G") {
-                    return true;
-                }
+    public boolean checkTrafficLight(Car currentcar) {
+        Coordinates mytlposition = new Coordinates();
+        TrafficLight mytrafficlight = new TrafficLight();
+        if(currentcar.getDirection() == 'E') {
+            mytlposition = new Coordinates(currentcar.getCar_pos().getX_Pos(), currentcar.getCar_pos().getY_Pos()-1);
+        }
+        else if(currentcar.getDirection() == 'W') {
+            mytlposition = new Coordinates(currentcar.getCar_pos().getX_Pos(), currentcar.getCar_pos().getY_Pos()+1);
+        }
+        else if(currentcar.getDirection() == 'N') {
+            mytlposition = new Coordinates(currentcar.getCar_pos().getX_Pos()-1, currentcar.getCar_pos().getY_Pos()-1);
+        }
+        else if(currentcar.getDirection() == 'S') {
+            mytlposition = new Coordinates(currentcar.getCar_pos().getX_Pos()+1, currentcar.getCar_pos().getY_Pos());
+        }
+        for(TrafficLight current_tl: mytrafficlights) {
+            if(current_tl.getPosition().getY_Pos() == mytlposition.getY_Pos() &&
+                    current_tl.getPosition().getX_Pos() == mytlposition.getX_Pos()) {
+                mytrafficlight = current_tl;
+                System.out.println(current_tl.getPosition().getX_Pos()+","+current_tl.getPosition().getY_Pos());
             }
+        }
+        if(mytrafficlight.getColor() == "G") {
+            return true;
         }
         return false;
     }
@@ -151,7 +170,7 @@ class Grid {
             if (this.mygrid_roads[next_pos.getY_Pos()][next_pos.getX_Pos()].equals("ST1") ||
                     this.mygrid_roads[next_pos.getY_Pos()][next_pos.getX_Pos()].equals("TW1") ||
                     this.mygrid_roads[next_pos.getY_Pos()][next_pos.getX_Pos()].equals("FW1")) {
-                if (checkIntersection()) {
+                if (checkIntersection() && checkTrafficLight(currentcar)) {
                     currentcar.setCar_pos(next_pos);
                 }
             }
@@ -284,7 +303,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         //Initialising the grid
-        Grid the_grid = new Grid(30,30);
+        Grid the_grid = new Grid(50,50);
         the_grid.myroads = new ArrayList<>();
         the_grid.mycars = new ArrayList<>();
         the_grid.my_straight_intersections = new ArrayList<>();
@@ -304,7 +323,7 @@ public class Main {
         the_grid.myroads.add(new Road(7, new Coordinates(5,16), new Coordinates(11,16), 'E'));
 
         //Adding 3Way
-        Threeway intersection3 = new Threeway(new Road(250, new Coordinates(18,2), new Coordinates(18,2),'S'), new ArrayList<Road>());
+        Threeway intersection3 = new Threeway(new Road(250, new Coordinates(18,2), new Coordinates(18,2),'E'), new ArrayList<Road>());
         intersection3.getNext_position().add(the_grid.myroads.get(1));
         intersection3.getNext_position().add(the_grid.myroads.get(2));
         the_grid.my_threeway_intersections.add(intersection3);
@@ -316,12 +335,19 @@ public class Main {
         intersection4.getNext_position().add(the_grid.myroads.get(5));
         intersection4.getNext_position().add(the_grid.myroads.get(6));
         the_grid.my_fourway_intersections.add(intersection4);
+        the_grid.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(the_grid.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(-1,-1))));
+        the_grid.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(the_grid.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(1,1))));
+        the_grid.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(the_grid.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(-1,1))));
+        the_grid.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(the_grid.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(1,-1))));
+
+        //Adding TL
+        //TrafficLight tl1 = new TrafficLight('R', new Coordinates());
+
         //Adding the cars
         the_grid.mycars.add(new Car(1, the_grid.myroads.get(0).getStart_pos(), the_grid.myroads.get(0).getDirection()));
-        the_grid.mycars.add(new Car(2, the_grid.myroads.get(6).getStart_pos(), the_grid.myroads.get(6).getDirection()));
+        the_grid.mycars.add(new Car(2, the_grid.myroads.get(3).getStart_pos(), 'S'));
         the_grid.mycars.get(0).Move();
         the_grid.mycars.get(1).Move();
-
 
         try {
             for(int i=0;i<15;i++) {
@@ -336,6 +362,31 @@ public class Main {
         }
         the_grid.mycars.get(0).Stop();
         //the_grid.mycars.get(1).Stop();
-    }
+        /* Use an appropriate Look and Feel */
+        gui myguiwindow = new gui(the_grid.mygrid_roads, the_grid.mygrid_vehicles);
+        try {
+            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (UnsupportedLookAndFeelException ex) {
+            ex.printStackTrace();
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        /* Turn off metal's use bold fonts */
+        UIManager.put("swing.boldMetal", Boolean.FALSE);
 
-}
+        //Schedule a job for the event dispatch thread:
+        //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                the_grid.drawGrid();
+                myguiwindow.createAndShowGUI();
+                myguiwindow.repaint();
+            }
+        });
+    }
+    }

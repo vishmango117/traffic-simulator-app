@@ -9,6 +9,9 @@ public class Coordinates {
         this.Y_Pos = Y_Pos;
     }
 
+    public Coordinates() {
+    }
+
     public static Coordinates add_coordinate (Coordinates coords1, Coordinates coords2) {
         Coordinates result = new Coordinates(0,0);
         result.setX_Pos(coords1.X_Pos+coords2.X_Pos);

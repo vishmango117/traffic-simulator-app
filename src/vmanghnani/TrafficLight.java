@@ -9,6 +9,9 @@ public class TrafficLight {
         Position = position;
     }
 
+    public TrafficLight() {
+    }
+
     public String getColor() {
         return color;
     }
@@ -24,5 +27,9 @@ public class TrafficLight {
         else if(this.color=="Red") {
             this.color="Green";
         }
+    }
+
+    public static void spawn_traffc_light() {
+
     }
 }
