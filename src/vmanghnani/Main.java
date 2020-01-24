@@ -179,6 +179,11 @@ class Grid {
             this.mygrid_roads[next_pos.getY_Pos()][next_pos.getX_Pos()].equals("RD1")) {
                 currentcar.setCar_pos(next_pos);
             }
+            //when car is near the end
+            else if(this.mygrid_roads[current_pos.getY_Pos()][current_pos.getX_Pos()].equals("RD1") &&
+            this.mygrid_roads[next_pos.getY_Pos()][next_pos.getX_Pos()].equals("   ")) {
+                mycars.remove(currentcar);
+            }
             //when car is inside the straight intersection
             else if(this.mygrid_roads[current_pos.getY_Pos()][current_pos.getX_Pos()].equals("ST1")) {
                 for (Straight current_int : this.my_straight_intersections) {
@@ -265,7 +270,7 @@ class Grid {
                     }
                 }
                 else if(currentcar.getDirection()=='S') {
-                    if(myintersection.getNext_position().get(mynumber).getDirection() == 'S') {
+                    if(myintersection.getNext_position().get(mynumber).getDirection() == 'W') {
                         currentcar.setDirection(myintersection.getNext_position().get(mynumber).getDirection());
                         currentcar.setCar_pos(myintersection.getNext_position().get(mynumber).getEnd_pos());
                     }
@@ -297,13 +302,57 @@ class Grid {
             }
         }
     }
+
+    public void layout1() {
+        //Adding Roads for threeway
+        this.myroads.add(new Road(1, new Coordinates(0, 2), new Coordinates(17, 2), 'E'));
+        this.myroads.add(new Road(2, new Coordinates(19, 2), new Coordinates(49, 2), 'E'));
+        this.myroads.add(new Road(3, new Coordinates(18, 3), new Coordinates(18, 24), 'S'));
+
+        //Adding Roads for fourway
+        this.myroads.add(new Road(5, new Coordinates(12, 17), new Coordinates(12, 20), 'S'));
+        this.myroads.add(new Road(6, new Coordinates(13, 16), new Coordinates(15, 16), 'E'));
+        this.myroads.add(new Road(7, new Coordinates(0, 25), new Coordinates(17, 25), 'E'));
+
+        //Adding 3Way
+        Threeway intersection3 = new Threeway(new Road(250, new Coordinates(18,2), new Coordinates(18,2),'E'), new ArrayList<Road>());
+        intersection3.getNext_position().add(this.myroads.get(1));
+        intersection3.getNext_position().add(this.myroads.get(2));
+        this.my_threeway_intersections.add(intersection3);
+        //Eastbound
+        this.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(this.my_threeway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(-1,-1))));
+        //Northbound
+        this.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(this.my_threeway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(1,-1))));
+        //Westbound
+        this.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(this.my_threeway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(-1,1))));
+
+        //Adding 4way
+        Fourway intersection4 = new Fourway(new Road(250, new Coordinates(18,25), new Coordinates(18,25),'E'), new ArrayList<Road>());
+        intersection4.getNext_position().add(this.myroads.get(3));
+        intersection4.getNext_position().add(this.myroads.get(4));
+        intersection4.getNext_position().add(this.myroads.get(5));
+        intersection4.getNext_position().add(this.myroads.get(2));
+        this.my_fourway_intersections.add(intersection4);
+        //Eastbound
+        this.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(this.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(-1,-1))));
+        //Southbound
+        this.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(this.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(1,1))));
+        //Westbound
+        this.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(this.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(-1,1))));
+        //Northbound
+        this.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(this.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(1,-1))));
+
+    }
 }
 
+
 public class Main {
+
+
     public static void main(String[] args) throws IOException {
 
         //Initialising the grid
-        Grid the_grid = new Grid(50,50);
+        Grid the_grid = new Grid(50, 50);
         the_grid.myroads = new ArrayList<>();
         the_grid.mycars = new ArrayList<>();
         the_grid.my_straight_intersections = new ArrayList<>();
@@ -311,82 +360,22 @@ public class Main {
         the_grid.my_threeway_intersections = new ArrayList<>();
         the_grid.my_fourway_intersections = new ArrayList<>();
 
-        //Adding Roads for threeway
-        the_grid.myroads.add(new Road(1, new Coordinates(10,2), new Coordinates(17, 2),'E'));
-        the_grid.myroads.add(new Road(2, new Coordinates(19,2), new Coordinates(28, 2),'E'));
-        the_grid.myroads.add(new Road(3, new Coordinates(18,3), new Coordinates(18, 20),'S'));
 
-        //Adding Roads for fourway
-        the_grid.myroads.add(new Road(4, new Coordinates(12,10), new Coordinates(12,15),'N'));
-        the_grid.myroads.add(new Road(5, new Coordinates(12,17), new Coordinates(12,20), 'S'));
-        the_grid.myroads.add(new Road(6, new Coordinates(13,16), new Coordinates(15,16), 'E'));
-        the_grid.myroads.add(new Road(7, new Coordinates(5,16), new Coordinates(11,16), 'E'));
-
-        //Adding 3Way
-        Threeway intersection3 = new Threeway(new Road(250, new Coordinates(18,2), new Coordinates(18,2),'E'), new ArrayList<Road>());
-        intersection3.getNext_position().add(the_grid.myroads.get(1));
-        intersection3.getNext_position().add(the_grid.myroads.get(2));
-        the_grid.my_threeway_intersections.add(intersection3);
-
-        //Adding 4way
-        Fourway intersection4 = new Fourway(new Road(250, new Coordinates(12,16), new Coordinates(12,16),'E'), new ArrayList<Road>());
-        intersection4.getNext_position().add(the_grid.myroads.get(3));
-        intersection4.getNext_position().add(the_grid.myroads.get(4));
-        intersection4.getNext_position().add(the_grid.myroads.get(5));
-        intersection4.getNext_position().add(the_grid.myroads.get(6));
-        the_grid.my_fourway_intersections.add(intersection4);
-        the_grid.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(the_grid.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(-1,-1))));
-        the_grid.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(the_grid.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(1,1))));
-        the_grid.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(the_grid.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(-1,1))));
-        the_grid.mytrafficlights.add(new TrafficLight("G", Coordinates.add_coordinate(the_grid.my_fourway_intersections.get(0).getInt_road().getStart_pos(),new Coordinates(1,-1))));
-
-        //Adding TL
-        //TrafficLight tl1 = new TrafficLight('R', new Coordinates());
-
+        for (int i = 0; i < the_grid.myroads.size(); i++) {
+            Random mynumber = new Random();
+            int myvalue = mynumber.nextInt(the_grid.myroads.size());
+            if (the_grid.myroads.get(myvalue).getDirection() == 'E') {
+                the_grid.mycars.add(new Car(i, the_grid.myroads.get(myvalue).getStart_pos(), the_grid.myroads.get(myvalue).getDirection()));
+                the_grid.mycars.get(i).Move();
+            } else {
+                the_grid.mycars.add(new Car(i, the_grid.myroads.get(myvalue).getEnd_pos(), the_grid.myroads.get(myvalue).getDirection()));
+                the_grid.mycars.get(i).Move();
+            }
+        }
         //Adding the cars
-        the_grid.mycars.add(new Car(1, the_grid.myroads.get(0).getStart_pos(), the_grid.myroads.get(0).getDirection()));
-        the_grid.mycars.add(new Car(2, the_grid.myroads.get(3).getStart_pos(), 'S'));
-        the_grid.mycars.get(0).Move();
-        the_grid.mycars.get(1).Move();
-
-        try {
-            for(int i=0;i<15;i++) {
-                the_grid.drawGrid();
-                the_grid.printGrid();
-                System.out.println();
-                the_grid.updateCarPos(the_grid.mycars);
-            }
-        }
-        catch(NullPointerException e) {
-            System.out.println("LUL");
-        }
-        the_grid.mycars.get(0).Stop();
-        //the_grid.mycars.get(1).Stop();
-        /* Use an appropriate Look and Feel */
-        gui myguiwindow = new gui(the_grid.mygrid_roads, the_grid.mygrid_vehicles);
-        try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        /* Turn off metal's use bold fonts */
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
-
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                the_grid.drawGrid();
-                myguiwindow.createAndShowGUI();
-                myguiwindow.repaint();
-            }
-        });
+        the_grid.drawGrid();
+        backup myframe = new backup(the_grid);
+        myframe.loadscreen();
+        myframe.validate();
     }
-    }
+}

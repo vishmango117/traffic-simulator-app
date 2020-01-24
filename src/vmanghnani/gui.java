@@ -2,27 +2,47 @@ package vmanghnani;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-class fillgrid extends JPanel {
+class Mygrid extends JPanel implements Runnable {
+    private String [][] mygrid_roads;
 
-    public String[][] mygrid_roads;
-    public String[][] mygrid_vehicles;
-
-    public fillgrid(String[][] mygrid_roads, String[][] mygrid_vehicles) {
+    public Mygrid(String[][] mygrid_roads) {
         this.mygrid_roads = mygrid_roads;
-        this.mygrid_vehicles = mygrid_vehicles;
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(new Color(255,255,0,1));
-        g2d.fillRect(20, 20, 300, 300);
+        setBackground(Color.GREEN);
+        for(int i =0;i<mygrid_roads.length;i++) {
+            for(int j=0;j<mygrid_roads[i].length;j++) {
+                System.out.println(this.mygrid_roads[i][j]);
+                if(this.mygrid_roads[i][j]=="RD1") {
+                g.setColor(Color.BLUE);
+                g.fillRect(i * 100, j * 100, 50, 50); }
+            }
+        }
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            this.repaint();
+            this.repaint();
+            try{
+                Thread.sleep(1000);
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
-public class gui extends JFrame {
+
+public class gui extends JFrame{
 
     private String[][] mygrid_roads;
     private String[][] mygrid_vehicles;
@@ -32,14 +52,17 @@ public class gui extends JFrame {
         this.mygrid_vehicles = mygrid_vehicles;
     }
 
+    public JPanel getgridstuff() {
+        JPanel gridpanel = new JPanel();
+        gridpanel.setLayout(new CardLayout());
+        gridpanel.setPreferredSize(new Dimension(500,500));
+        gridpanel.add(new Mygrid(this.mygrid_roads));
+        return gridpanel;
+    }
+
     public static boolean RIGHT_TO_LEFT = false;
 
     public void addComponentsToPane(Container pane) {
-
-        if (!(pane.getLayout() instanceof BorderLayout)) {
-            pane.add(new JLabel("Container doesn't use BorderLayout!"));
-            return;
-        }
 
         if (RIGHT_TO_LEFT) {
             pane.setComponentOrientation(
@@ -53,14 +76,11 @@ public class gui extends JFrame {
         modepanel.add(citymode);
         modepanel.add(simulator);
         pane.add(modepanel, BorderLayout.PAGE_START);
+        pane.repaint();
 
         //Make the center component big, since that's the
         //typical usage of BorderLayout.
-        JPanel gridpanel = new JPanel();
-        gridpanel.setPreferredSize(new Dimension(500,500));
-        gridpanel.setLayout(new CardLayout());
-        gridpanel.add(new fillgrid(this.mygrid_roads, this.mygrid_vehicles));
-        pane.add(gridpanel, BorderLayout.CENTER);
+        pane.add(getgridstuff(), BorderLayout.CENTER);
 
         JPanel sidepanel = new JPanel();
         sidepanel.setLayout(new FlowLayout());
@@ -68,8 +88,20 @@ public class gui extends JFrame {
         sidepanel.setPreferredSize(new Dimension(200,500));
         JButton start_simulation = new JButton("Start");
         start_simulation.setPreferredSize(new Dimension(200,200));
+        start_simulation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                getgridstuff();
+            }
+        });
         JButton stop_simulation = new JButton("Stop");
         stop_simulation.setPreferredSize(new Dimension(200,200));
+        stop_simulation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //Stop Simulation
+            }
+        });
         sidepanel.add(start_simulation);
         sidepanel.add(stop_simulation);
         pane.add(sidepanel, BorderLayout.LINE_START);
@@ -89,7 +121,7 @@ public class gui extends JFrame {
 
         //Create and set up the window.
         JFrame frame = new JFrame("BorderLayoutDemo");
-        frame.setSize(1366,768);
+        frame.setSize(1920,1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Set up the content pane.
         addComponentsToPane(frame.getContentPane());
@@ -98,5 +130,8 @@ public class gui extends JFrame {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+
+        frame.revalidate();
+        frame.repaint();
     }
 }
