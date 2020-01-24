@@ -21,11 +21,11 @@ public class TrafficLight {
     }
 
     public void operate() {
-        if(this.color=="Green") {
-            this.color = "Red";
+        if(this.color=="G") {
+            this.color = "R";
         }
-        else if(this.color=="Red") {
-            this.color="Green";
+        else if(this.color=="R") {
+            this.color="G";
         }
     }
 

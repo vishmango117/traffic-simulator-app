@@ -5,44 +5,53 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import java.util.concurrent.Flow;
 
 class mygrid extends JPanel {
 
-    private String[][] mygrid_roads;
-    private String[][] mygrid_vehicles;
+    private Grid the_grid;
 
-    public mygrid(String[][] mygrid_roads, String[][] mygrid_vehicles) {
-        this.mygrid_roads = mygrid_roads;
-        this.mygrid_vehicles = mygrid_vehicles;
+    public mygrid(Grid the_grid) {
+        this.the_grid = the_grid;
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        setBackground(Color.GREEN);
-        for(int i=0;i<mygrid_roads.length;i++) {
-            for(int j=0;j<mygrid_roads[i].length;j++) {
-                if(mygrid_roads[j][i]=="RD1") {
+        setBackground(new Color(0,100,0 ,1 ));
+        for(int i=0;i<the_grid.mygrid_roads.length;i++) {
+            for(int j=0;j<the_grid.mygrid_roads[i].length;j++) {
+                if(the_grid.mygrid_roads[j][i]=="RD1") {
                     g.setColor(Color.BLUE);
                     g.fillRect(i * 20, j * 20, 20, 20);
                 }
-                else if(mygrid_roads[j][i]=="TW1") {
+                else if(the_grid.mygrid_roads[j][i]=="TW1") {
                     g.setColor(Color.WHITE);
                     g.fillRect(i * 20, j * 20, 20, 20);
                 }
-                else if(mygrid_roads[j][i]=="FW1") {
+                else if(the_grid.mygrid_roads[j][i]=="FW1") {
                     g.setColor(Color.WHITE);
                     g.fillRect(i * 20, j * 20, 20, 20);
                 }
-                else if(mygrid_roads[j][i]=="TL1") {
-                    g.setColor(Color.RED);
-                    g.fillRect(i * 20, j * 20, 20, 20);
                 }
             }
-        }
-        for(int i=0;i<mygrid_vehicles.length;i++) {
-            for (int j = 0; j < mygrid_vehicles[i].length; j++) {
-                if(mygrid_vehicles[j][i]=="CR1") {
+        for(int i=0;i<the_grid.mygrid_vehicles.length;i++) {
+            for (int j = 0; j <the_grid.mygrid_vehicles[i].length; j++) {
+                  if(the_grid.mygrid_roads[j][i]=="TL1") {
+                    for(TrafficLight currenttl: this.the_grid.mytrafficlights) {
+                        if(currenttl.getPosition().getY_Pos() == j &&
+                                currenttl.getPosition().getX_Pos() == i) {
+                            if(currenttl.getColor()=="G") {
+                                g.setColor(Color.GREEN);
+                            }
+                            else {
+                                g.setColor(Color.RED);
+                            }
+                        }
+                    }
+                    g.fillRect(i * 20, j * 20, 20, 20);
+                }
+                else if(the_grid.mygrid_vehicles[j][i]=="CR1") {
                     g.setColor(Color.CYAN);
                     g.fillRect(i * 20, j * 20, 20, 20);
                 }
@@ -63,12 +72,19 @@ public class backup extends JFrame {
         Thread thread = new Thread(() -> {
             while(state) {
             try {
-                Thread.sleep(1000);
+                int counter =0;
+                Thread.sleep(500);
                 this.the_grid.updateCarPos(the_grid.mycars);
                 this.the_grid.drawGrid();
                 this.the_grid.printGrid();
                 mygridpanel.validate();
                 mygridpanel.repaint();
+                counter++;
+                if(counter%10==0) {
+                    for (TrafficLight currenttl : the_grid.mytrafficlights) {
+                        currenttl.operate();
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 }
@@ -78,18 +94,19 @@ public class backup extends JFrame {
     }
 
     public void createroad() {
-        JPanel road_values = new JPanel();
-        JLabel x_label = new JLabel("X:");
-        JTextArea x_input = new JTextArea();
-        JLabel y_label = new JLabel("Y: ");
-        JTextArea y_input = new JTextArea();
-        road_values.add(x_label);
-        road_values.add(x_input);
-        road_values.add(y_label);
-        road_values.add(y_input);
+        int x_value = Integer.parseInt(JOptionPane.showInputDialog("Input X"));
+        int y_value = Integer.parseInt(JOptionPane.showInputDialog("Input Y"));
+        int size = Integer.parseInt(JOptionPane.showInputDialog("Input Y"));
+        String orientation = JOptionPane.showInputDialog("Orientation: ");
+        //char direction = JOptionPane.showInputDialog("Input Direction");
 
-        //the_grid.myroads.add();
-
+        if(orientation=="vertical") {
+        the_grid.myroads.add(new Road(the_grid.myroads.size(), new Coordinates(x_value,y_value), new Coordinates(x_value,y_value+size),(char) direction));
+        }
+        else
+        {
+            the_grid.myroads.add(new Road(the_grid.myroads.size(), new Coordinates(x_value,y_value), new Coordinates(x_value,y_value+size), (char) direction);
+        }
     }
 
 
@@ -110,21 +127,17 @@ public class backup extends JFrame {
     public void loadscreen() {
         JFrame myframe = new JFrame("Traffic Car Simulator");
         myframe.setLayout(new BorderLayout());
-        myframe.setSize(600,600);
+        myframe.setSize(1920,1080);
         myframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Adding Grid
-        JPanel mygridpanel = new mygrid(the_grid.mygrid_roads, the_grid.mygrid_vehicles);
+        JPanel mygridpanel = new mygrid(the_grid);
+        mygridpanel.setLayout(new FlowLayout());
+        mygridpanel.setPreferredSize(new Dimension(1366,768));
         myframe.add(mygridpanel, BorderLayout.CENTER);
         //Adding MenuMode
         JPanel modepanel = new JPanel();
         modepanel.setPreferredSize(new Dimension(150,50));
         JButton citymode = new JButton("City Mode");
-        citymode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                createroad();
-            }
-        });
         JButton simulator = new JButton("Simulator");
         modepanel.add(citymode);
         modepanel.add(simulator);
@@ -132,7 +145,8 @@ public class backup extends JFrame {
         //Window Settings
         //SIDEPANEL
         JPanel sidepanel = new JPanel();
-        sidepanel.setLayout(new CardLayout());
+        CardLayout mycard1 = new CardLayout();
+        sidepanel.setLayout(mycard1);
         sidepanel.setPreferredSize(new Dimension(100,500));
         JPanel sidepanel1 = new JPanel();
         //SIDEPANEL1
@@ -143,7 +157,6 @@ public class backup extends JFrame {
         start_simulator.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                    the_grid.layout1();
                     autogeneratecars();
                     run_process(mygridpanel, true);
             }
@@ -157,9 +170,8 @@ public class backup extends JFrame {
             }
         });
 
-
-        JPanel sidepanel2 = new JPanel();
-        sidepanel2.setLayout(new FlowLayout());
+        //SIDEPANEL2
+        JPanel sidepanel2 = new JPanel(new FlowLayout());
         JButton preset = new JButton("Preset");
         preset.setPreferredSize(new Dimension(100,100));
         JButton custom = new JButton("Custom");
@@ -176,12 +188,31 @@ public class backup extends JFrame {
                 createroad();
             }
         });
+        JPanel sidepanel3 = new JPanel(new FlowLayout());
+        JButton add_road = new JButton("Add Road");
+        JButton add_intersection = new JButton("Add Intersection");
         sidepanel1.add(start_simulator);
         sidepanel1.add(stop_simulator);
         sidepanel2.add(preset);
         sidepanel2.add(custom);
-        sidepanel.add(sidepanel1);
-        sidepanel.add(sidepanel2);
+        sidepanel3.add(add_road);
+        sidepanel3.add(add_intersection);
+        sidepanel.add(sidepanel1,"s1");
+        sidepanel.add(sidepanel2, "s2");
+        sidepanel.add(sidepanel3,"s3");
+
+        citymode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mycard1.show(sidepanel, "s1");
+            }
+        });
+        simulator.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mycard1.show(sidepanel, "s2");
+            }
+        });
         myframe.add(sidepanel, BorderLayout.LINE_START);
         myframe.setVisible(true);
         myframe.revalidate();
