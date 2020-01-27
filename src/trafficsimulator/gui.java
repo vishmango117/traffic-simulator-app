@@ -1,14 +1,14 @@
-package vmanghnani;
+package trafficsimulator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class Mygrid extends JPanel implements Runnable {
+class maingrid extends JPanel implements Runnable {
     private String [][] mygrid_roads;
 
-    public Mygrid(String[][] mygrid_roads) {
+    public maingrid(String[][] mygrid_roads) {
         this.mygrid_roads = mygrid_roads;
     }
 
@@ -56,7 +56,7 @@ public class gui extends JFrame{
         JPanel gridpanel = new JPanel();
         gridpanel.setLayout(new CardLayout());
         gridpanel.setPreferredSize(new Dimension(500,500));
-        gridpanel.add(new Mygrid(this.mygrid_roads));
+        gridpanel.add(new maingrid(this.mygrid_roads));
         return gridpanel;
     }
 

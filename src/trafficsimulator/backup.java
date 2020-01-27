@@ -1,11 +1,10 @@
-package vmanghnani;
+package trafficsimulator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import java.util.concurrent.Flow;
 
 class mygrid extends JPanel {
 
@@ -23,15 +22,15 @@ class mygrid extends JPanel {
             for(int j=0;j<the_grid.mygrid_roads[i].length;j++) {
                 if(the_grid.mygrid_roads[j][i]=="RD1") {
                     g.setColor(Color.BLUE);
-                    g.fillRect(i * 20, j * 20, 20, 20);
+                    g.fillRect(i * 15, j * 15, 15, 15);
                 }
                 else if(the_grid.mygrid_roads[j][i]=="TW1") {
                     g.setColor(Color.WHITE);
-                    g.fillRect(i * 20, j * 20, 20, 20);
+                    g.fillRect(i * 15, j * 15, 15, 15);
                 }
                 else if(the_grid.mygrid_roads[j][i]=="FW1") {
                     g.setColor(Color.WHITE);
-                    g.fillRect(i * 20, j * 20, 20, 20);
+                    g.fillRect(i * 15, j * 15, 15, 15);
                 }
                 }
             }
@@ -49,11 +48,11 @@ class mygrid extends JPanel {
                             }
                         }
                     }
-                    g.fillRect(i * 20, j * 20, 20, 20);
+                    g.fillRect(i * 15, j * 15, 15, 15);
                 }
                 else if(the_grid.mygrid_vehicles[j][i]=="CR1") {
                     g.setColor(Color.CYAN);
-                    g.fillRect(i * 20, j * 20, 20, 20);
+                    g.fillRect(i * 15, j * 15, 15, 15);
                 }
             }
         }
@@ -63,50 +62,39 @@ class mygrid extends JPanel {
 public class backup extends JFrame {
 
     public Grid the_grid;
-
+    public static boolean state=true;
+    public int counter = 0;
+    Thread thread = new Thread();
     public backup(Grid the_grid) throws HeadlessException {
         this.the_grid = the_grid;
     }
 
-    public void run_process(JPanel mygridpanel, boolean state) {
-        Thread thread = new Thread(() -> {
-            while(state) {
-            try {
-                int counter =0;
-                Thread.sleep(500);
-                this.the_grid.updateCarPos(the_grid.mycars);
-                this.the_grid.drawGrid();
-                this.the_grid.printGrid();
-                mygridpanel.validate();
-                mygridpanel.repaint();
-                counter++;
-                if(counter%10==0) {
-                    for (TrafficLight currenttl : the_grid.mytrafficlights) {
-                        currenttl.operate();
-                    }
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
+
+    public void show_edit_grid(JFrame myframe) {
+
     }
 
-    public void createroad() {
-        int x_value = Integer.parseInt(JOptionPane.showInputDialog("Input X"));
-        int y_value = Integer.parseInt(JOptionPane.showInputDialog("Input Y"));
-        int size = Integer.parseInt(JOptionPane.showInputDialog("Input Y"));
-        String orientation = JOptionPane.showInputDialog("Orientation: ");
-        //char direction = JOptionPane.showInputDialog("Input Direction");
-
-        if(orientation=="vertical") {
-        the_grid.myroads.add(new Road(the_grid.myroads.size(), new Coordinates(x_value,y_value), new Coordinates(x_value,y_value+size),'E'));
-        }
-        else
-        {
-            the_grid.myroads.add(new Road(the_grid.myroads.size(), new Coordinates(x_value,y_value), new Coordinates(x_value,y_value+size), 'S'));
-        }
+    public void process_run(JFrame myframe, boolean state) {
+         new Thread(() -> {
+            while (state) {
+                try {
+                    Thread.sleep(500);
+                    this.the_grid.drawGrid();
+                    this.the_grid.printGrid();
+                    this.the_grid.updateCarPos(the_grid.mycars);
+                    myframe.validate();
+                    myframe.repaint();
+                    counter+=1;
+                    if (counter % 5 == 0) {
+                        for (TrafficLight currenttl : the_grid.mytrafficlights) {
+                            currenttl.operate();
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
 
@@ -115,7 +103,7 @@ public class backup extends JFrame {
             Random mynumber = new Random();
             int myvalue = mynumber.nextInt(the_grid.myroads.size());
             if (the_grid.myroads.get(myvalue).getDirection() == 'E') {
-                the_grid.mycars.add(new Car(i, the_grid.myroads.get(myvalue).getStart_pos(), the_grid.myroads.get(myvalue).getDirection()));
+                the_grid.mycars.add(new trafficsimulator.Car(i, the_grid.myroads.get(myvalue).getStart_pos(), the_grid.myroads.get(myvalue).getDirection()));
                 the_grid.mycars.get(i).Move();
             } else {
                 the_grid.mycars.add(new Car(i, the_grid.myroads.get(myvalue).getEnd_pos(), the_grid.myroads.get(myvalue).getDirection()));
@@ -127,14 +115,31 @@ public class backup extends JFrame {
     public void loadscreen() {
         JFrame myframe = new JFrame("Traffic Car Simulator");
         myframe.setLayout(new BorderLayout());
-        myframe.setSize(1920,1080);
+        myframe.setSize(1366,768);
         myframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Adding Grid
+
+        //GRIDPANEL1
+        JPanel mygridpanel1 = new mygrid(the_grid);
+        mygridpanel1.setLayout(new FlowLayout());
+        mygridpanel1.setPreferredSize(new Dimension(700,700));
+
+        //GRIDPANEL2
+        JPanel mygridpanel2 = new mygrid(the_grid);
+        mygridpanel2.setLayout(new FlowLayout());
+        mygridpanel2.setPreferredSize(new Dimension(700,700));
+
+        //GRIDPANEL
         JPanel mygridpanel = new mygrid(the_grid);
-        mygridpanel.setLayout(new FlowLayout());
-        mygridpanel.setPreferredSize(new Dimension(1366,768));
+        CardLayout mygridlayout = new CardLayout();
+        mygridpanel.setLayout(mygridlayout);
+        mygridpanel.setPreferredSize(new Dimension(700,700));
+        mygridpanel.add(mygridpanel1, "simulation_grid");
+        mygridpanel.add(mygridpanel2, "editor_grid");
         myframe.add(mygridpanel, BorderLayout.CENTER);
-        //Adding MenuMode
+        myframe.validate();
+        myframe.repaint();
+
+        //MODEPANEL
         JPanel modepanel = new JPanel();
         modepanel.setPreferredSize(new Dimension(150,50));
         JButton citymode = new JButton("City Mode");
@@ -142,11 +147,14 @@ public class backup extends JFrame {
         modepanel.add(citymode);
         modepanel.add(simulator);
         myframe.add(modepanel, BorderLayout.PAGE_START);
+        myframe.validate();
+        myframe.repaint();
         //Window Settings
         //SIDEPANEL
         JPanel sidepanel = new JPanel();
-        CardLayout mycard1 = new CardLayout();
-        sidepanel.setLayout(mycard1);
+        CardLayout sidepanelcard = new CardLayout();
+
+        sidepanel.setLayout(sidepanelcard);
         sidepanel.setPreferredSize(new Dimension(100,500));
         JPanel sidepanel1 = new JPanel();
         //SIDEPANEL1
@@ -158,7 +166,7 @@ public class backup extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                     autogeneratecars();
-                    run_process(mygridpanel, true);
+                    process_run(myframe, true);
             }
         });
         JButton stop_simulator = new JButton("Stop");
@@ -166,56 +174,91 @@ public class backup extends JFrame {
         stop_simulator.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                run_process(mygridpanel, false);
+                thread.stop();
             }
         });
 
         //SIDEPANEL2
         JPanel sidepanel2 = new JPanel(new FlowLayout());
-        JButton preset = new JButton("Preset");
-        preset.setPreferredSize(new Dimension(100,100));
+        JButton layout1 = new JButton("Layout1");
+        JButton layout2 = new JButton("Layout2");
+        JButton layout3 = new JButton("Layout3");
+        layout1.setPreferredSize(new Dimension(100,100));
+        CardLayout layoutscard = new CardLayout();
         JButton custom = new JButton("Custom");
         custom.setPreferredSize(new Dimension(100,100));
-        preset.addActionListener(new ActionListener() {
+        layout1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 the_grid.layout1();
+                sidepanel.validate();
+                sidepanel.repaint();
+            }
+        });
+        layout2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                the_grid.layout1();
+                sidepanel.validate();
+                sidepanel.repaint();
             }
         });
         custom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                createroad();
+                the_grid.create_road();
+                sidepanel.repaint();
             }
         });
-        JPanel sidepanel3 = new JPanel(new FlowLayout());
         JButton add_road = new JButton("Add Road");
         JButton add_intersection = new JButton("Add Intersection");
+        add_road.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                the_grid.create_road();
+                sidepanel.repaint();
+            }
+        });
+        add_intersection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                the_grid.create_intersection();
+                sidepanel.repaint();
+            }
+        });
         sidepanel1.add(start_simulator);
         sidepanel1.add(stop_simulator);
-        sidepanel2.add(preset);
-        sidepanel2.add(custom);
-        sidepanel3.add(add_road);
-        sidepanel3.add(add_intersection);
+        sidepanel2.add(layout1);
+        sidepanel2.add(layout2);
+        sidepanel2.add(layout3);
+        sidepanel2.add(add_road);
+        sidepanel2.add(add_intersection);
         sidepanel.add(sidepanel1,"s1");
         sidepanel.add(sidepanel2, "s2");
-        sidepanel.add(sidepanel3,"s3");
+        myframe.validate();
+        myframe.repaint();
 
         citymode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mycard1.show(sidepanel, "s1");
+                sidepanelcard.show(sidepanel, "s1");
+                mygridlayout.show(mygridpanel, "editor_grid");
+                myframe.validate();
+                myframe.repaint();
             }
         });
         simulator.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                mycard1.show(sidepanel, "s2");
+                sidepanelcard.show(sidepanel, "s2");
+                mygridlayout.show(mygridpanel,"simulation_grid");
+                sidepanel.validate();
+                sidepanel.repaint();
             }
         });
         myframe.add(sidepanel, BorderLayout.LINE_START);
-        myframe.setVisible(true);
         myframe.revalidate();
         myframe.repaint();
+        myframe.setVisible(true);
     }
 }
