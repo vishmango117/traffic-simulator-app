@@ -1,16 +1,16 @@
-package vmanghnani;
+package trafficsimulator;
 
 public class Intersection {
-    private Road int_road;
+    private trafficsimulator.Road int_road;
 
-    public Intersection(Road int_road) {
+    public Intersection(trafficsimulator.Road int_road) {
         this.int_road = int_road;
     }
 
     public Intersection() {
     }
 
-    public Road getInt_road() {
+    public trafficsimulator.Road getInt_road() {
         return int_road;
     }
 

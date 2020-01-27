@@ -1,11 +1,11 @@
-package vmanghnani;
+package trafficsimulator;
 
 import java.util.ArrayList;
 
 public class Fourway extends Intersection {
-    private ArrayList<Road> next_position;
+    private ArrayList<trafficsimulator.Road> next_position;
 
-    public Fourway(Road current_position, ArrayList<Road> next_position) {
+    public Fourway(trafficsimulator.Road current_position, ArrayList<trafficsimulator.Road> next_position) {
         super(current_position);
         this.next_position = next_position;
     }
@@ -13,7 +13,7 @@ public class Fourway extends Intersection {
     public Fourway() {
     }
 
-    public Fourway(ArrayList<Road> next_position) {
+    public Fourway(ArrayList<trafficsimulator.Road> next_position) {
         this.next_position = next_position;
     }
 

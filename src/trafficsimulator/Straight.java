@@ -1,9 +1,9 @@
-package vmanghnani;
+package trafficsimulator;
 
 public class Straight extends Intersection {
-    private Road next_road;
+    private trafficsimulator.Road next_road;
 
-    public Straight(Road int_road, Road next_road) {
+    public Straight(trafficsimulator.Road int_road, trafficsimulator.Road next_road) {
         super(int_road);
         this.next_road = next_road;
     }
@@ -13,7 +13,7 @@ public class Straight extends Intersection {
         super();
     }
 
-    public Road getNext_road() {
+    public trafficsimulator.Road getNext_road() {
         return next_road;
     }
 

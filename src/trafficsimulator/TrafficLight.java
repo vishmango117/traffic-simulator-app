@@ -1,10 +1,10 @@
-package vmanghnani;
+package trafficsimulator;
 
 public class TrafficLight {
     private String color;
-    private Coordinates Position;
+    private trafficsimulator.Coordinates Position;
 
-    public TrafficLight(String color, Coordinates position) {
+    public TrafficLight(String color, trafficsimulator.Coordinates position) {
         this.color = color;
         Position = position;
     }

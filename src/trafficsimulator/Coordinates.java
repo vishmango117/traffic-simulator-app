@@ -1,4 +1,4 @@
-package vmanghnani;
+package trafficsimulator;
 
 public class Coordinates {
     private int Y_Pos;

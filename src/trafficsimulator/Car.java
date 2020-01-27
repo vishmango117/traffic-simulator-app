@@ -1,12 +1,12 @@
-package vmanghnani;
+package trafficsimulator;
 
 public class Car {
     private int car_no;
-    private Coordinates car_pos;
+    private trafficsimulator.Coordinates car_pos;
     private int car_speed;
     private char direction;
 
-    public Car(int car_no, Coordinates car_pos, char direction) {
+    public Car(int car_no, trafficsimulator.Coordinates car_pos, char direction) {
         this.car_no = car_no;
         this.car_pos = car_pos;
         this.car_speed = 0;
@@ -20,7 +20,7 @@ public class Car {
         this.car_speed = 0;
     }
 
-    public Coordinates getCar_pos() {
+    public trafficsimulator.Coordinates getCar_pos() {
         return car_pos;
     }
 

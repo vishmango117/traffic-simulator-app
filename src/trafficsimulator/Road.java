@@ -1,4 +1,4 @@
-package vmanghnani;
+package trafficsimulator;
 
 public class Road {
     private int road_no;
