@@ -4,14 +4,15 @@ A JavaFX-based Traffic Simulator that models vehicle movement on roads, intersec
 
 ## Table of Contents
 - [Features](#features)
-- [Prerequisites](#prerequisites)
+- [Prerequisites](#prerequisities)
+- [Upcoming Features](#upcoming-features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
 - [License](#license)
 
-## <a id="features"></a>Features
+## Features
 - **Realistic Traffic Simulation**: Simulate multiple vehicles and their behavior at intersections, traffic signals, and lane changes.
 - **Dynamic Environment**: Roads and intersections can be configured to model different traffic scenarios.
 - **User Interface**: Interactive UI built using JavaFX to visualize the traffic simulation.
@@ -20,12 +21,12 @@ A JavaFX-based Traffic Simulator that models vehicle movement on roads, intersec
 - **Customizable Parameters**: Adjust settings like vehicle speed, traffic signal duration, and more.
 - **A more usable Interface**: Honestly the UI is kinda ugly and hard to design. Will work on a more basic and usable User Interface.
 
-## <a id="prerequisities"></a>Prerequisites
+## Prerequisites
 Make sure you have the following installed on your system:
 - **Java 11 or later**
 - **Maven 3.6 or later**
 
-## <a id="installation"></a>Installation
+## Installation
 
 1. **Clone the repository**
    ```bash
