@@ -5,6 +5,6 @@ module trafficsimulator.trafficsimulator {
     requires com.almasb.fxgl.all;
     requires java.desktop;
 
-    opens trafficsimulator.trafficsimulator to javafx.fxml;
+    opens trafficsimulator to javafx.fxml;
     exports trafficsimulator;
 }
